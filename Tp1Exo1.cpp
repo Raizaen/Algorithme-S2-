@@ -110,7 +110,7 @@ fraction simpl (fraction a) {
   n = pgcd(a.num, a.den);
   res.num = a.num/n;
   res.den = a.den/n;
-  if (a.den<0) {
+  if (a.den < 0) {
     a.num = (-1 * a.num);
     a.den = (-1 * a.den);
   }
