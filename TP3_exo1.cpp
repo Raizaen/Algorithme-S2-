@@ -1,4 +1,6 @@
 #include <iostream> 
+#include <ctime>
+#include <cstdlib>
 #include <array>
 
 using namespace std; 
@@ -31,7 +33,11 @@ void saisie (Tab t, int a) {
 }
 */
 void genalea () {
-
+  srand(time(NULL));
+  for(int i(0);i<n;i++)
+  {
+    T[i] = rand() %
+  }
 }
 
 
@@ -57,4 +63,5 @@ int main () {
 
 	pos(t,3,5);
 
+	return 0;
 }
