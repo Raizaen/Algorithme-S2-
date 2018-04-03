@@ -61,14 +61,56 @@ string telephone (string nom, string prenom, repertoire R) {
 	return telephone (nom, prenom, R -> suiv); 
 }
 
+int searchPos (string nom, string prenom, repertoire R, int & pos) { 
+  if (R==NULL) return 0;
+  if (R -> pers.nom == nom and R -> pers.prenom == prenom) {
+    return pos;
+  }
+  pos++;
+  return searchPos (nom, prenom, R -> suiv, pos); 
+}
+
+/*void add (int pos, string nom, string prenom, string tel, repertoire & R) {
+  if (pos > R) {
+    repertoire a = new element;
+    a -> pers.nom = nom;
+    a -> pers.prenom = prenom;
+    a -> pers.tel = tel;
+  }
+  
+}
+*/
+void del (int pos, repertoire & R) { 
+  if (R == NULL) {
+    
+  }
+  else { 
+    int n = 0;
+    if (pos == searchPos ("aze", "rty", R, n)) {
+      b = R;
+      R = R -> suiv;
+      delete b;
+    }
+  }
+
+}
+
+
 int main () {
+  int pos=0;
 	repertoire A;
 	initRep(A);
-	addHead("Bayart","Valentin","0657465212",A);
-	addTail("Coyle","Matthew","6666666666",A);
+	addHead("Bayart", "Valentin", "0657465212", A);
+	addTail("Coyle", "Matthew", "6666666666", A);
+	addTail("aze", "rty", "1685749685", A);
+	addTail("qsd", "fgh", "0563254185", A);
+	addTail("wxc", "vbn", "1247896530", A);
 	affichPersonne (A->pers);
 	affichRep (A);
-	cout << "Telephone :" << telephone("Coyle","Matthew",A) << endl;
-
+	cout << "Telephone :" << telephone("Coyle", "Matthew", A) << endl;
+	searchPos ("aze", "rty", A, pos);
+	cout << pos << endl;
+	del (int pos, A);
+	affichRep (A);
 	return 0;
 }
