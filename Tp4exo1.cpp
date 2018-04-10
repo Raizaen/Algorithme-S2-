@@ -61,56 +61,115 @@ string telephone (string nom, string prenom, repertoire R) {
 	return telephone (nom, prenom, R -> suiv); 
 }
 
-int searchPos (string nom, string prenom, repertoire R, int & pos) { 
+int searchPos (string nom, string prenom, repertoire R) { 
   if (R==NULL) return 0;
   if (R -> pers.nom == nom and R -> pers.prenom == prenom) {
-    return pos;
+    return 1;
   }
-  pos++;
-  return searchPos (nom, prenom, R -> suiv, pos); 
+  else {
+	  int n = searchPos (nom, prenom, R -> suiv);
+	  if (n == 0) return 0;
+	  else return n + 1;  
+  }
 }
 
-/*void add (int pos, string nom, string prenom, string tel, repertoire & R) {
-  if (pos > R) {
-    repertoire a = new element;
-    a -> pers.nom = nom;
-    a -> pers.prenom = prenom;
-    a -> pers.tel = tel;
-  }
-  
+int taille (repertoire R) {
+	if (R!=NULL) {
+		return 1+taille(R -> suiv);
+	}
 }
-*/
+
+void add (int pos, string nom, string prenom, string tel, repertoire & R) {
+	if ((R == NULL) || (pos > taille(R))) {
+		addTail(nom, prenom, tel, R);
+	}
+	if (pos == 1) {
+		repertoire a = new element;
+		a -> pers.nom = nom;
+		a -> pers.prenom = prenom;
+		a -> pers.tel = tel;
+		a -> suiv = R;
+		R = a;
+	}
+	else {
+		add (pos - 1, nom, prenom, tel, R -> suiv);
+	}
+		
+}
+
+void delFirst (repertoire &R)
+{
+	if (R!=NULL)
+	{
+		repertoire p=R;
+		R = R -> suiv;
+		delete p;
+	}
+}
+
 void del (int pos, repertoire & R) { 
   if (R == NULL) {
     
-  }
-  else { 
-    int n = 0;
-    if (pos == searchPos ("aze", "rty", R, n)) {
-      b = R;
-      R = R -> suiv;
-      delete b;
+  } 
+    if (pos == 1) {
+		repertoire b = R;
+		R = R -> suiv;
+		delete b;
     }
-  }
-
+    else {
+		del (pos - 1, R -> suiv);
+	}
 }
 
+void delName (string nom, repertoire & R) {
+	if (R!=NULL) {	
+		if (R -> pers.nom == nom) {
+			delFirst (R);
+			delName (nom, R);
+		}
+		delName (nom, R -> suiv);
+	}
+}
+
+void sort (repertoire & R) {
+		
+}
 
 int main () {
-  int pos=0;
 	repertoire A;
 	initRep(A);
 	addHead("Bayart", "Valentin", "0657465212", A);
+	addTail("Bayart", "Val", "0678465265", A);
+	addTail("Bayart", "qsf", "0654565265", A);
 	addTail("Coyle", "Matthew", "6666666666", A);
 	addTail("aze", "rty", "1685749685", A);
 	addTail("qsd", "fgh", "0563254185", A);
 	addTail("wxc", "vbn", "1247896530", A);
-	affichPersonne (A->pers);
+	affichPersonne (A -> pers);
+	cout << endl;
 	affichRep (A);
 	cout << "Telephone :" << telephone("Coyle", "Matthew", A) << endl;
-	searchPos ("aze", "rty", A, pos);
-	cout << pos << endl;
-	del (int pos, A);
+	
+	cout << endl;	
+	cout << searchPos("qsd", "fgh", A) << endl;
+	
+	int pos;
+	cout << "Donnez une position : ";
+	cin >> pos ;
+	cout << endl;
+	
+	del (pos, A);
+	cout << endl;
 	affichRep (A);
+	cout << endl;
+	
+	add (pos,"aze", "rty", "1685749685", A);
+	affichRep (A);
+	cout << endl;
+	
+	delName ("Bayart", A);
+	affichRep (A);
+	cout << endl;
+	
 	return 0;
 }
