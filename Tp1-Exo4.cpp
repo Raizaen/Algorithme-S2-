@@ -27,7 +27,18 @@ void affich (tab t, int n) {
 
 int main () {
   srand(time(NULL));
+  
   tab t;
-  gen_tab(t,20,5,25);
-  affich(t,20);
+  int n,min,max;
+  
+  cout << "Choisir le nombre de valeur à générer dans le tableau :" << endl;
+  cin >> n;
+  cout << endl;
+  cout << "Choisir la valeur minimale et maximale du rand : " << endl;
+  cin >> min >> max;
+  cout << endl;
+  
+  gen_tab(t,n,min,max);
+  affich(t,(n-1));
+  cout  << endl;
 }
