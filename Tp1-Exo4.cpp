@@ -29,7 +29,16 @@ void affich (Tab t, int n) {
 }
 
 //c
-
+/*
+int l (Tab t) {
+    int p = 0;
+      while (t[p]!=0) {
+        p++;
+      }
+      return p;
+      
+}
+*/
 
 int indexof (Tab &t, int n, int p, int cmpt) {
   if (cmpt==n) {
@@ -43,30 +52,35 @@ int indexof (Tab &t, int n, int p, int cmpt) {
   }
   
 }
-
-void separate (Tab t, int n, Tab &t1, Tab &t2, int idxmid, int nT1, int cmpt) {
+// Absolument pas ce qu'il faut faire :/
+/*
+void separate (Tab t, int n, Tab &t1, Tab &t2, int idxmid, int nT1, int cmpt, int cmpt1) {
   if (n==0) {
     return;
   }
   if (cmpt == n) {
-  return;
+    return;
   }
   if (cmpt <= nT1) {
     t1[cmpt] = t[cmpt];
-    return separate (t, n, t1, t2, idxmid, nT1, cmpt+1);
+    return separate (t, n, t1, t2, idxmid, nT1, cmpt+1,cmpt1);
   }
   if (cmpt > nT1 && cmpt < n) {
-    t2[cmpt] = t[cmpt];
-    return separate (t, n, t1, t2, idxmid, nT1, cmpt+1); 
+    t2[cmpt1] = t[cmpt];
+    return separate (t, n, t1, t2, idxmid, nT1, cmpt+1,cmpt1+1); 
   }
   
 }
+*/
+
+// d
+
 
 int main () {
   srand(time(NULL));
   
   Tab t, t1, t2;
-  int n, min, max, p, cmptidx=0, cmptsep=0;
+  int n, min, max, p, cmptidx=0, cmptsep=0, cmptsep1=0;
   
   cout << "Choisir le nombre de valeur à générer dans le Tableau : " << endl;
   cin >> n;
@@ -86,10 +100,12 @@ int main () {
   cout << indexof(t, n, p, cmptidx) << endl;
   
   int nT1 = n - idxmid;
-  int nT2 = idxmid;
-  
-  separate(t, n, t1, t2, idxmid, nT1, cmptsep);
-  affich(t1, n);
+  int nT2 = n-nT1-2;
+  separate(t, n, t1, t2, idxmid, nT1, cmptsep, cmptsep1);
+  affich(t2,nT2);
   cout << endl;
-  affich(t2, n);
+  affich(t1,nT1);
+  cout << endl;
+  
+  return 0;
 }
